@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import GeneralInfo from './components/GeneralInfo';
+import GeneralInfo from './components/logic/GeneralInfo';
+import EdExp from './components/logic/EdExp';
 
 import './App.css';
 
@@ -8,6 +9,7 @@ class App extends Component {
     return (
       <div className="App">
         <GeneralInfo />
+        <EdExp />
       </div>
     );
   }
