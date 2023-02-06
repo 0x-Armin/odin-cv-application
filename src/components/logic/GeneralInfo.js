@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import GeneralInfoDisplay from './GeneralInfoDisplay';
+import GeneralInfoDisplay from '../display/GeneralInfoDisplay';
 
 class GeneralInfo extends Component {
   constructor() {
@@ -8,7 +8,7 @@ class GeneralInfo extends Component {
     this.state = {
       name: '',
       email: '',
-      phoneNum: null,
+      phoneNum: '',
       showForm: true,
     };
 
