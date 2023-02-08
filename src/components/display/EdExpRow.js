@@ -8,7 +8,6 @@ class EdExpRow extends Component {
   render() {
     return (
       <div id={this.props.id} className='edExpRow'>
-        {console.log(this.props)}
         <div>School: {this.props.schoolName}</div>
         <div>Title of Study: {this.props.titleOfStudy}</div>
         <div>Date (From): {this.props.dateFrom}</div>
