@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import GeneralInfoDisplay from '../display/GeneralInfoDisplay';
+import React, { Component } from "react";
+import GeneralInfoDisplay from "../display/GeneralInfoDisplay";
 
-import '../../styles/style.css';
+import "../../styles/style.css";
 
 class GeneralInfo extends Component {
   constructor() {
     super();
 
     this.state = {
-      name: '',
-      email: '',
-      phoneNum: '',
-      showForm: true,
+      name: "",
+      email: "",
+      phoneNum: "",
+      showForm: false,
     };
 
     this.handleNameChange = this.handleNameChange.bind(this);
@@ -22,59 +22,72 @@ class GeneralInfo extends Component {
   }
 
   handleNameChange(event) {
-    this.setState({name: event.target.value});
+    this.setState({ name: event.target.value });
   }
 
   handleEmailChange(event) {
-    this.setState({email: event.target.value});
+    this.setState({ email: event.target.value });
   }
 
   handlePhoneNumChange(event) {
-    this.setState({phoneNum: event.target.value});
+    this.setState({ phoneNum: event.target.value });
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({showForm: false});
+    this.setState({ showForm: false });
   }
 
   handleEdit(event) {
-    this.setState({showForm: true});
+    this.setState({ showForm: true });
   }
 
   render() {
     return (
       <div>
-        <h2>General Information</h2>
-        {this.state.showForm &&
-          <form className='input-form' onSubmit={this.handleSubmit}>
+        <GeneralInfoDisplay
+          name={this.state.name}
+          email={this.state.email}
+          phoneNum={this.state.phoneNum}
+        />
+
+        {!this.state.showForm && (
+          <button className="add-btn" onClick={this.handleEdit}>Add/edit general information</button>
+        )}
+
+        {this.state.showForm && (
+          <form className="input-form" onSubmit={this.handleSubmit}>
             <label>
               Name:
-              <input type='text' value={this.state.name} onChange={this.handleNameChange} />
+              <input
+                type="text"
+                value={this.state.name}
+                onChange={this.handleNameChange}
+              />
             </label>
             <label>
               Email:
-              <input type='email' value={this.state.email} onChange={this.handleEmailChange} />
+              <input
+                type="email"
+                value={this.state.email}
+                onChange={this.handleEmailChange}
+              />
             </label>
             <label>
               Phone number:
-              <input type='tel' value={this.state.phoneNum} onChange={this.handlePhoneNumChange} />
+              <input
+                type="tel"
+                value={this.state.phoneNum}
+                onChange={this.handlePhoneNumChange}
+              />
             </label>
-            <div className='form-button'>
-             <input type='submit' value='Submit' />
+            <div className="form-button">
+              <input type="submit" value="Submit" />
             </div>
           </form>
-        }
-        
-        <GeneralInfoDisplay name={this.state.name} email={this.state.email} phoneNum={this.state.phoneNum} />
-
-        {!this.state.showForm &&
-          <button onClick={this.handleEdit}>
-            Edit
-          </button>
-        }
+        )}
       </div>
-    )
+    );
   }
 }
 

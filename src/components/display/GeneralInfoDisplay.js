@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import "../../styles/style.css";
 
 class GeneralInfoDisplay extends Component {
   constructor(props) {
@@ -7,10 +8,12 @@ class GeneralInfoDisplay extends Component {
 
   render() {
     return (
-      <div>
-        <h3>Name: {this.props.name}</h3>
-        <p>Email: {this.props.email}</p>
-        <p>Phone number: {this.props.phoneNum}</p>
+      <div className="resume-section">
+        <div className="name-section">{this.props.name}</div>
+        <div className="contact-info">
+          <div className="contact-info-top">{this.props.email}</div>
+          <div className="contact-info-btm">{this.props.phoneNum}</div>
+        </div>
       </div>
     );
   }
