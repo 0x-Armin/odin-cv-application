@@ -1,3 +1,6 @@
+/*
+  FORMS
+*/
 .input-form {
   max-width: 20em;
   margin: 0 auto;
@@ -39,4 +42,111 @@
 input,
 label {
   display: block;
+}
+
+/*
+  BUTTONS
+*/
+.add-btn {
+  height: 34px;
+  padding: 8px;
+}
+
+/*
+  RESUME SECTION
+*/
+.resume-section {
+  display: grid;
+  grid-template-columns: 9fr 1fr;
+
+  width: 30%;
+  margin: 12px auto;
+
+}
+
+.name-section {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+
+  font-size: 42px;
+  font-weight: 500;
+}
+
+.contact-info {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+
+}
+
+.contact-info-top {
+  align-self: end;
+}
+
+.contact-info-btm {
+  align-self: start;
+}
+
+/*
+  RESUME BODY
+*/
+.resume-body {
+  width: 30%;
+  margin: 12px auto;
+}
+
+.resume-body ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.section-header {
+  font-size: 28px;
+  font-weight: 450;
+
+  text-align: left;
+}
+
+/*
+  EDUCATION
+*/
+.ed-exp-entry-div {
+  position: relative;
+
+  margin-bottom: 16px;
+}
+
+.edit-btn {
+  position: absolute;
+  top: 10%;
+  right: 3%;
+}
+
+.ed-exp-details {
+  display: grid;
+  grid-template-columns: 5fr 5fr;
+
+  margin: 8px 0;
+}
+
+.ed-exp-entry-left {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  justify-items: start;
+}
+
+.school {
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.title-of-study {
+  align-self: end;
+}
+
+.date-section {
+  align-self: end;
+
+  font-size: 14px;
+  font-style: italic;
 }

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import EdExpRow from "../display/EdExpRow";
 import uniqid from "uniqid";
 
-import '../../styles/style.css';
+import "../../styles/style.css";
 
 class EdExp extends Component {
   constructor() {
@@ -14,7 +14,7 @@ class EdExp extends Component {
       titleOfStudy: "",
       dateFrom: "",
       dateTo: "",
-      id: '',
+      id: "",
       EdExpArr: [],
     };
 
@@ -29,11 +29,11 @@ class EdExp extends Component {
   }
 
   showAddForm() {
-    this.setState({ showForm: true })
+    this.setState({ showForm: true });
   }
 
   closeForm() {
-    this.setState({ showForm: false })
+    this.setState({ showForm: false });
   }
 
   handleSchoolNameChange(e) {
@@ -55,7 +55,7 @@ class EdExp extends Component {
   handleSubmit(e) {
     e.preventDefault();
     // add new educational exp
-    if (this.state.id === '') {
+    if (this.state.id === "") {
       const newEdExp = new Map([
         ["schoolName", this.state.schoolName],
         ["titleOfStudy", this.state.titleOfStudy],
@@ -63,33 +63,32 @@ class EdExp extends Component {
         ["dateTo", this.state.dateTo],
         ["id", uniqid()],
       ]);
-  
+
       this.setState({
         EdExpArr: [newEdExp, ...this.state.EdExpArr],
         showForm: false,
-        schoolName: '',
-        titleOfStudy: '',
-        dateFrom: '',
-        dateTo: '',
+        schoolName: "",
+        titleOfStudy: "",
+        dateFrom: "",
+        dateTo: "",
       });
     } else {
       // update existing educational exp
       const copyEdExpArr = [...this.state.EdExpArr];
-      for (let i=0; i<copyEdExpArr.length; i++) {
-        if (this.state.id === copyEdExpArr[i].get('id')) {
-          copyEdExpArr[i].set('schoolName', this.state.schoolName);
-          copyEdExpArr[i].set('titleOfStudy', this.state.titleOfStudy);
-          copyEdExpArr[i].set('dateFrom', this.state.dateFrom);
-          copyEdExpArr[i].set('dateTo', this.state.dateTo);
+      for (let i = 0; i < copyEdExpArr.length; i++) {
+        if (this.state.id === copyEdExpArr[i].get("id")) {
+          copyEdExpArr[i].set("schoolName", this.state.schoolName);
+          copyEdExpArr[i].set("titleOfStudy", this.state.titleOfStudy);
+          copyEdExpArr[i].set("dateFrom", this.state.dateFrom);
+          copyEdExpArr[i].set("dateTo", this.state.dateTo);
         }
       }
-      this.setState({ 
+      this.setState({
         EdExpArr: copyEdExpArr,
-        id: '',
+        id: "",
         showForm: false,
       });
     }
-
   }
 
   handleEdit(e) {
@@ -97,29 +96,55 @@ class EdExp extends Component {
     let desiredEdExp = undefined;
 
     for (let edExp of this.state.EdExpArr) {
-      if (edExp.get('id') === targetId) {
+      if (edExp.get("id") === targetId) {
         desiredEdExp = edExp;
         break;
       }
     }
 
     this.setState({
-      schoolName: desiredEdExp.get('schoolName'),
-      titleOfStudy: desiredEdExp.get('titleOfStudy'),
-      dateFrom: desiredEdExp.get('dateFrom'),
-      dateTo: desiredEdExp.get('dateTo'),
-      id: desiredEdExp.get('id'),
+      schoolName: desiredEdExp.get("schoolName"),
+      titleOfStudy: desiredEdExp.get("titleOfStudy"),
+      dateFrom: desiredEdExp.get("dateFrom"),
+      dateTo: desiredEdExp.get("dateTo"),
+      id: desiredEdExp.get("id"),
       showForm: true,
-    })
+    });
   }
 
   render() {
     return (
       <div>
-        <h2>Education</h2>
-        <button onClick={this.showAddForm}>Add</button>
+        <div className="resume-body">
+          <div className="section-header">Education</div>
+          <ul>
+            {this.state.EdExpArr.map((edExp) => (
+              <li key={edExp.get("id")}>
+                <div className="ed-exp-entry-div">
+                  <EdExpRow
+                    id={edExp.get("id")}
+                    schoolName={edExp.get("schoolName")}
+                    titleOfStudy={edExp.get("titleOfStudy")}
+                    dateFrom={edExp.get("dateFrom")}
+                    dateTo={edExp.get("dateTo")}
+                  />
+                  <div className="edit-btn">
+                    <button id={edExp.get("id")} onClick={this.handleEdit}>
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <button className="add-btn" onClick={this.showAddForm}>
+          Add education
+        </button>
+
         {this.state.showForm && (
-          <form className='input-form' onSubmit={this.handleSubmit}>
+          <form className="input-form" onSubmit={this.handleSubmit}>
             <label>
               School Name:
               <input
@@ -154,27 +179,10 @@ class EdExp extends Component {
             </label>
             <div className="form-button">
               <input type="submit" value="Submit" />
-             <button onClick={this.closeForm}>Close</button>
+              <button onClick={this.closeForm}>Close</button>
             </div>
           </form>
         )}
-
-        <ul>
-          {this.state.EdExpArr.map((edExp) => (
-            <li key={edExp.get("id")}>
-              <div className="edExpDisplay">
-                <EdExpRow
-                  id={edExp.get("id")}
-                  schoolName={edExp.get("schoolName")}
-                  titleOfStudy={edExp.get("titleOfStudy")}
-                  dateFrom={edExp.get("dateFrom")}
-                  dateTo={edExp.get("dateTo")}
-                />
-                <button id={edExp.get("id")} onClick={this.handleEdit}>Edit</button>
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
     );
   }
