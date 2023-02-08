@@ -118,13 +118,13 @@ label {
 
 .edit-btn {
   position: absolute;
-  top: 10%;
+  top: 2%;
   right: 3%;
 }
 
 .ed-exp-details {
   display: grid;
-  grid-template-columns: 5fr 5fr;
+  grid-template-columns: 1fr 1fr;
 
   margin: 8px 0;
 }
@@ -135,12 +135,12 @@ label {
   justify-items: start;
 }
 
-.school {
+.entry-name {
   font-size: 24px;
   font-weight: 400;
 }
 
-.title-of-study {
+.title {
   align-self: end;
 }
 
@@ -149,4 +149,35 @@ label {
 
   font-size: 14px;
   font-style: italic;
+}
+
+/*
+  WORK EXP
+*/
+.prac-exp-entry-div {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.prac-exp-details {
+  display: grid;
+  grid-template-rows: 1fr fit-content(1fr);
+}
+
+.prac-exp-details-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  margin-bottom: 8px;
+}
+
+.prac-exp-details-header-left {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  justify-items: start;
+}
+
+.main-tasks {
+  white-space: pre-wrap;
+  text-align: left;
 }

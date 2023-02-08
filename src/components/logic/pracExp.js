@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PracExpRow from "../display/PracExpRow";
 import uniqid from "uniqid";
 
-import '../../styles/style.css';
+import "../../styles/style.css";
 
 class PracExp extends Component {
   constructor() {
@@ -12,10 +12,10 @@ class PracExp extends Component {
       showForm: false,
       companyName: "",
       positionTitle: "",
-      mainTasks: '',
+      mainTasks: "",
       dateFrom: "",
       dateTo: "",
-      id: '',
+      id: "",
       PracExpArr: [],
     };
 
@@ -31,11 +31,11 @@ class PracExp extends Component {
   }
 
   showAddForm() {
-    this.setState({ showForm: true })
+    this.setState({ showForm: true });
   }
 
   closeForm() {
-    this.setState({ showForm: false })
+    this.setState({ showForm: false });
   }
 
   handleCompanyNameChange(e) {
@@ -60,7 +60,7 @@ class PracExp extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    if (this.state.id === '') {
+    if (this.state.id === "") {
       const newPracExp = new Map([
         ["companyName", this.state.companyName],
         ["positionTitle", this.state.positionTitle],
@@ -69,34 +69,33 @@ class PracExp extends Component {
         ["dateTo", this.state.dateTo],
         ["id", uniqid()],
       ]);
-  
+
       this.setState({
         PracExpArr: [newPracExp, ...this.state.PracExpArr],
         showForm: false,
-        companyName: '',
-        positionTitle: '',
-        mainTasks: '',
-        dateFrom: '',
-        dateTo: '',
+        companyName: "",
+        positionTitle: "",
+        mainTasks: "",
+        dateFrom: "",
+        dateTo: "",
       });
     } else {
       const copyPracExpArr = [...this.state.PracExpArr];
-      for (let i=0; i<copyPracExpArr.length; i++) {
-        if (this.state.id === copyPracExpArr[i].get('id')) {
-          copyPracExpArr[i].set('companyName', this.state.companyName);
-          copyPracExpArr[i].set('positionTitle', this.state.positionTitle);
-          copyPracExpArr[i].set('mainTasks', this.state.mainTasks);
-          copyPracExpArr[i].set('dateFrom', this.state.dateFrom);
-          copyPracExpArr[i].set('dateTo', this.state.dateTo);
+      for (let i = 0; i < copyPracExpArr.length; i++) {
+        if (this.state.id === copyPracExpArr[i].get("id")) {
+          copyPracExpArr[i].set("companyName", this.state.companyName);
+          copyPracExpArr[i].set("positionTitle", this.state.positionTitle);
+          copyPracExpArr[i].set("mainTasks", this.state.mainTasks);
+          copyPracExpArr[i].set("dateFrom", this.state.dateFrom);
+          copyPracExpArr[i].set("dateTo", this.state.dateTo);
         }
       }
-      this.setState({ 
+      this.setState({
         PracExpArr: copyPracExpArr,
-        id: '',
+        id: "",
         showForm: false,
       });
     }
-
   }
 
   handleEdit(e) {
@@ -104,28 +103,54 @@ class PracExp extends Component {
     let desiredPracExp = undefined;
 
     for (let pracExp of this.state.PracExpArr) {
-      if (pracExp.get('id') === targetId) {
+      if (pracExp.get("id") === targetId) {
         desiredPracExp = pracExp;
         break;
       }
     }
 
     this.setState({
-      companyName: desiredPracExp.get('companyName'),
-      positionTitle: desiredPracExp.get('positionTitle'),
-      mainTasks: desiredPracExp.get('mainTasks'),
-      dateFrom: desiredPracExp.get('dateFrom'),
-      dateTo: desiredPracExp.get('dateTo'),
-      id: desiredPracExp.get('id'),
+      companyName: desiredPracExp.get("companyName"),
+      positionTitle: desiredPracExp.get("positionTitle"),
+      mainTasks: desiredPracExp.get("mainTasks"),
+      dateFrom: desiredPracExp.get("dateFrom"),
+      dateTo: desiredPracExp.get("dateTo"),
+      id: desiredPracExp.get("id"),
       showForm: true,
-    })
+    });
   }
 
   render() {
     return (
       <div>
-        <h2>Work Experience</h2>
-        <button onClick={this.showAddForm}>Add</button>
+        <div className="resume-body">
+          <div className="section-header">Work Experience</div>
+          <ul>
+            {this.state.PracExpArr.map((pracExp) => (
+              <li key={pracExp.get("id")}>
+                <div className="prac-exp-entry-div">
+                  <PracExpRow
+                    id={pracExp.get("id")}
+                    companyName={pracExp.get("companyName")}
+                    positionTitle={pracExp.get("positionTitle")}
+                    mainTasks={pracExp.get("mainTasks")}
+                    dateFrom={pracExp.get("dateFrom")}
+                    dateTo={pracExp.get("dateTo")}
+                  />
+                  <div className="edit-btn">
+                    <button id={pracExp.get("id")} onClick={this.handleEdit}>
+                      Edit
+                    </button>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <button className="add-btn" onClick={this.showAddForm}>
+          Add work experience
+        </button>
         {this.state.showForm && (
           <form className="input-form" onSubmit={this.handleSubmit}>
             <label>
@@ -147,10 +172,10 @@ class PracExp extends Component {
             <label>
               Main tasks:
               <textarea
-                rows='5'
+                rows="5"
                 value={this.state.mainTasks}
-                onChange={this.handleMainTasksChange}>
-              </textarea>
+                onChange={this.handleMainTasksChange}
+              ></textarea>
             </label>
             <label>
               Date (From):
@@ -170,29 +195,10 @@ class PracExp extends Component {
             </label>
             <div className="form-button">
               <input type="submit" value="Submit" />
-             <button onClick={this.closeForm}>Close</button>
+              <button onClick={this.closeForm}>Close</button>
             </div>
-
           </form>
         )}
-
-        <ul>
-          {this.state.PracExpArr.map((pracExp) => (
-            <li key={pracExp.get("id")}>
-              <div className="pracExpDisplay">
-                <PracExpRow
-                  id={pracExp.get("id")}
-                  companyName={pracExp.get("companyName")}
-                  positionTitle={pracExp.get("positionTitle")}
-                  mainTasks={pracExp.get('mainTasks')}
-                  dateFrom={pracExp.get("dateFrom")}
-                  dateTo={pracExp.get("dateTo")}
-                />
-                <button id={pracExp.get("id")} onClick={this.handleEdit}>Edit</button>
-              </div>
-            </li>
-          ))}
-        </ul>
       </div>
     );
   }

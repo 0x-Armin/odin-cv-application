@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import '../../styles/prac-exp-style.css'
+import React, { Component } from "react";
+import "../../styles/style.css";
 
 class PracExpRow extends Component {
   constructor(props) {
@@ -8,15 +8,20 @@ class PracExpRow extends Component {
 
   render() {
     return (
-      <div id={this.props.id} className='pracExpRow'>
-        <div>Company: {this.props.companyName}</div>
-        <div>Position: {this.props.positionTitle}</div>
-        <div>Main tasks:</div>
-        <div className='main-tasks'>{this.props.mainTasks}</div>
-        <div>Date (From): {this.props.dateFrom}</div>
-        <div>Date (To): {this.props.dateTo}</div>
+      <div id={this.props.id} className="prac-exp-details">
+        <div className="prac-exp-details-header">
+          <div className="prac-exp-details-header-left">
+            <div className="entry-name">{this.props.companyName}</div>
+            <div className="title">{this.props.positionTitle}</div>
+          </div>
+          <div className="date-section">
+            {this.props.dateFrom} to {this.props.dateTo}
+          </div>
+        </div>
+
+        <div className="main-tasks">{this.props.mainTasks}</div>
       </div>
-    )
+    );
   }
 }
 
