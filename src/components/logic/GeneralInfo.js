@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import GeneralInfoDisplay from '../display/GeneralInfoDisplay';
 
+import '../../styles/style.css';
+
 class GeneralInfo extends Component {
   constructor() {
     super();
@@ -45,7 +47,7 @@ class GeneralInfo extends Component {
       <div>
         <h2>General Information</h2>
         {this.state.showForm &&
-          <form onSubmit={this.handleSubmit}>
+          <form className='input-form' onSubmit={this.handleSubmit}>
             <label>
               Name:
               <input type='text' value={this.state.name} onChange={this.handleNameChange} />
@@ -58,7 +60,9 @@ class GeneralInfo extends Component {
               Phone number:
               <input type='tel' value={this.state.phoneNum} onChange={this.handlePhoneNumChange} />
             </label>
-            <input type='submit' value='Submit' />
+            <div className='form-button'>
+             <input type='submit' value='Submit' />
+            </div>
           </form>
         }
         

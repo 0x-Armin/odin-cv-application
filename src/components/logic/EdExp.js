@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import EdExpRow from "../display/EdExpRow";
 import uniqid from "uniqid";
 
+import '../../styles/style.css';
+
 class EdExp extends Component {
   constructor() {
     super();
@@ -117,7 +119,7 @@ class EdExp extends Component {
         <h2>Education</h2>
         <button onClick={this.showAddForm}>Add</button>
         {this.state.showForm && (
-          <form onSubmit={this.handleSubmit}>
+          <form className='input-form' onSubmit={this.handleSubmit}>
             <label>
               School Name:
               <input
@@ -150,8 +152,10 @@ class EdExp extends Component {
                 onChange={this.handleDateToChange}
               />
             </label>
-            <input type="submit" value="Submit" />
-            <button onClick={this.closeForm}>Close</button>
+            <div className="form-button">
+              <input type="submit" value="Submit" />
+             <button onClick={this.closeForm}>Close</button>
+            </div>
           </form>
         )}
 

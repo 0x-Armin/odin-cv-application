@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import PracExpRow from "../display/PracExpRow";
 import uniqid from "uniqid";
 
+import '../../styles/style.css';
+
 class PracExp extends Component {
   constructor() {
     super();
@@ -122,10 +124,10 @@ class PracExp extends Component {
   render() {
     return (
       <div>
-        <h2>Practical Experience</h2>
+        <h2>Work Experience</h2>
         <button onClick={this.showAddForm}>Add</button>
         {this.state.showForm && (
-          <form onSubmit={this.handleSubmit}>
+          <form className="input-form" onSubmit={this.handleSubmit}>
             <label>
               Company Name:
               <input
@@ -145,7 +147,6 @@ class PracExp extends Component {
             <label>
               Main tasks:
               <textarea
-                cols='40'
                 rows='5'
                 value={this.state.mainTasks}
                 onChange={this.handleMainTasksChange}>
@@ -167,8 +168,11 @@ class PracExp extends Component {
                 onChange={this.handleDateToChange}
               />
             </label>
-            <input type="submit" value="Submit" />
-            <button onClick={this.closeForm}>Close</button>
+            <div className="form-button">
+              <input type="submit" value="Submit" />
+             <button onClick={this.closeForm}>Close</button>
+            </div>
+
           </form>
         )}
 

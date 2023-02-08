@@ -1,0 +1,42 @@
+.input-form {
+  max-width: 20em;
+  margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  text-align: left;
+}
+
+.input-form label {
+  line-height: 28px;
+  padding-left: 0;
+  margin: 0 0 8px 0;
+}
+
+.input-form input {
+  height: 28px;
+  width: 97%;
+}
+
+.input-form textarea {
+  width: 97%;
+}
+
+.input-form .form-button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.input-form .form-button input[type='submit'],
+.input-form .form-button button {
+  width: 30%;
+  height: 34px;
+  margin: 0 0 8px 0;
+}
+
+input,
+label {
+  display: block;
+}
