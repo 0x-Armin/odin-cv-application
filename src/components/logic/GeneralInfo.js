@@ -43,6 +43,7 @@ class GeneralInfo extends Component {
   render() {
     return (
       <div>
+        <h2>General Information</h2>
         {this.state.showForm &&
           <form onSubmit={this.handleSubmit}>
             <label>

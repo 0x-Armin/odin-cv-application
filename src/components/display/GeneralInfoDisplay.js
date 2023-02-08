@@ -8,7 +8,7 @@ class GeneralInfoDisplay extends Component {
   render() {
     return (
       <div>
-        <h2>Name: {this.props.name}</h2>
+        <h3>Name: {this.props.name}</h3>
         <p>Email: {this.props.email}</p>
         <p>Phone number: {this.props.phoneNum}</p>
       </div>
