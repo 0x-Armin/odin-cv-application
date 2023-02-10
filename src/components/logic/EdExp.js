@@ -1,191 +1,165 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import EdExpRow from "../display/EdExpRow";
 import uniqid from "uniqid";
 
 import "../../styles/style.css";
 
-class EdExp extends Component {
-  constructor() {
-    super();
+const EdExp = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [schoolName, setSchoolName] = useState("");
+  const [titleOfStudy, setTitleOfStudy] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [id, setId] = useState("");
+  const [EdExpArr, setEdExpArr] = useState([]);
 
-    this.state = {
-      showForm: false,
-      schoolName: "",
-      titleOfStudy: "",
-      dateFrom: "",
-      dateTo: "",
-      id: "",
-      EdExpArr: [],
-    };
+  const showAddForm = () => {
+    setShowForm(true);
+  };
 
-    this.showAddForm = this.showAddForm.bind(this);
-    this.closeForm = this.closeForm.bind(this);
-    this.handleSchoolNameChange = this.handleSchoolNameChange.bind(this);
-    this.handleTitleOfStudyChange = this.handleTitleOfStudyChange.bind(this);
-    this.handleDateFromChange = this.handleDateFromChange.bind(this);
-    this.handleDateToChange = this.handleDateToChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
-  }
+  const closeForm = () => {
+    setShowForm(false);
+  };
 
-  showAddForm() {
-    this.setState({ showForm: true });
-  }
+  const handleSchoolNameChange = (e) => {
+    setSchoolName(e.target.value);
+  };
 
-  closeForm() {
-    this.setState({ showForm: false });
-  }
+  const handleTitleOfStudyChange = (e) => {
+    setTitleOfStudy(e.target.value);
+  };
 
-  handleSchoolNameChange(e) {
-    this.setState({ schoolName: e.target.value });
-  }
+  const handleDateFromChange = (e) => {
+    setDateFrom(e.target.value);
+  };
 
-  handleTitleOfStudyChange(e) {
-    this.setState({ titleOfStudy: e.target.value });
-  }
+  const handleDateToChange = (e) => {
+    setDateTo(e.target.value);
+  };
 
-  handleDateFromChange(e) {
-    this.setState({ dateFrom: e.target.value });
-  }
-
-  handleDateToChange(e) {
-    this.setState({ dateTo: e.target.value });
-  }
-
-  handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // add new educational exp
-    if (this.state.id === "") {
+    if (id === "") {
       const newEdExp = new Map([
-        ["schoolName", this.state.schoolName],
-        ["titleOfStudy", this.state.titleOfStudy],
-        ["dateFrom", this.state.dateFrom],
-        ["dateTo", this.state.dateTo],
+        ["schoolName", schoolName],
+        ["titleOfStudy", titleOfStudy],
+        ["dateFrom", dateFrom],
+        ["dateTo", dateTo],
         ["id", uniqid()],
       ]);
 
-      this.setState({
-        EdExpArr: [newEdExp, ...this.state.EdExpArr],
-        showForm: false,
-        schoolName: "",
-        titleOfStudy: "",
-        dateFrom: "",
-        dateTo: "",
-      });
+      setEdExpArr([newEdExp, ...EdExpArr]);
+      setShowForm(false);
+      setSchoolName("");
+      setTitleOfStudy("");
+      setDateFrom("");
+      setDateTo("");
     } else {
       // update existing educational exp
-      const copyEdExpArr = [...this.state.EdExpArr];
+      const copyEdExpArr = [...EdExpArr];
       for (let i = 0; i < copyEdExpArr.length; i++) {
-        if (this.state.id === copyEdExpArr[i].get("id")) {
-          copyEdExpArr[i].set("schoolName", this.state.schoolName);
-          copyEdExpArr[i].set("titleOfStudy", this.state.titleOfStudy);
-          copyEdExpArr[i].set("dateFrom", this.state.dateFrom);
-          copyEdExpArr[i].set("dateTo", this.state.dateTo);
+        if (id === copyEdExpArr[i].get("id")) {
+          copyEdExpArr[i].set("schoolName", schoolName);
+          copyEdExpArr[i].set("titleOfStudy", titleOfStudy);
+          copyEdExpArr[i].set("dateFrom", dateFrom);
+          copyEdExpArr[i].set("dateTo", dateTo);
         }
       }
-      this.setState({
-        EdExpArr: copyEdExpArr,
-        id: "",
-        showForm: false,
-      });
-    }
-  }
 
-  handleEdit(e) {
+      setEdExpArr(copyEdExpArr);
+      setId("");
+      setShowForm(false);
+    }
+  };
+
+  const handleEdit = (e) => {
     const targetId = e.target.id;
     let desiredEdExp = undefined;
 
-    for (let edExp of this.state.EdExpArr) {
+    for (let edExp of EdExpArr) {
       if (edExp.get("id") === targetId) {
         desiredEdExp = edExp;
         break;
       }
     }
 
-    this.setState({
-      schoolName: desiredEdExp.get("schoolName"),
-      titleOfStudy: desiredEdExp.get("titleOfStudy"),
-      dateFrom: desiredEdExp.get("dateFrom"),
-      dateTo: desiredEdExp.get("dateTo"),
-      id: desiredEdExp.get("id"),
-      showForm: true,
-    });
-  }
+    setSchoolName(desiredEdExp.get("schoolName"));
+    setTitleOfStudy(desiredEdExp.get("titleOfStudy"));
+    setDateFrom(desiredEdExp.get("dateFrom"));
+    setDateTo(desiredEdExp.get("dateTo"));
+    setId(desiredEdExp.get("id"));
+    setShowForm(true);
+  };
 
-  render() {
-    return (
-      <div>
-        <div className="resume-body">
-          <div className="section-header">Education</div>
-          <ul>
-            {this.state.EdExpArr.map((edExp) => (
-              <li key={edExp.get("id")}>
-                <div className="ed-exp-entry-div">
-                  <EdExpRow
-                    id={edExp.get("id")}
-                    schoolName={edExp.get("schoolName")}
-                    titleOfStudy={edExp.get("titleOfStudy")}
-                    dateFrom={edExp.get("dateFrom")}
-                    dateTo={edExp.get("dateTo")}
-                  />
-                  <div className="edit-btn">
-                    <button id={edExp.get("id")} onClick={this.handleEdit}>
-                      Edit
-                    </button>
-                  </div>
+  return (
+    <div>
+      <div className="resume-body">
+        <div className="section-header">Education</div>
+        <ul>
+          {EdExpArr.map((edExp) => (
+            <li key={edExp.get("id")}>
+              <div className="ed-exp-entry-div">
+                {EdExpRow(
+                  edExp.get("id"),
+                  edExp.get("schoolName"),
+                  edExp.get("titleOfStudy"),
+                  edExp.get("dateFrom"),
+                  edExp.get("dateTo")
+                )}
+                <div className="edit-btn">
+                  <button id={edExp.get("id")} onClick={handleEdit}>
+                    Edit
+                  </button>
                 </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <button className="add-btn" onClick={this.showAddForm}>
-          Add education
-        </button>
-
-        {this.state.showForm && (
-          <form className="input-form" onSubmit={this.handleSubmit}>
-            <label>
-              School Name:
-              <input
-                type="text"
-                value={this.state.schoolName}
-                onChange={this.handleSchoolNameChange}
-              />
-            </label>
-            <label>
-              Title of Study:
-              <input
-                type="text"
-                value={this.state.titleOfStudy}
-                onChange={this.handleTitleOfStudyChange}
-              />
-            </label>
-            <label>
-              Date (From):
-              <input
-                type="date"
-                value={this.state.dateFrom}
-                onChange={this.handleDateFromChange}
-              />
-            </label>
-            <label>
-              Date (To):
-              <input
-                type="date"
-                value={this.state.dateTo}
-                onChange={this.handleDateToChange}
-              />
-            </label>
-            <div className="form-button">
-              <input type="submit" value="Submit" />
-              <button onClick={this.closeForm}>Close</button>
-            </div>
-          </form>
-        )}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
-    );
-  }
-}
+
+      <button className="add-btn" onClick={showAddForm}>
+        Add education
+      </button>
+
+      {showForm && (
+        <form className="input-form" onSubmit={handleSubmit}>
+          <label>
+            School Name:
+            <input
+              type="text"
+              value={schoolName}
+              onChange={handleSchoolNameChange}
+            />
+          </label>
+          <label>
+            Title of Study:
+            <input
+              type="text"
+              value={titleOfStudy}
+              onChange={handleTitleOfStudyChange}
+            />
+          </label>
+          <label>
+            Date (From):
+            <input
+              type="date"
+              value={dateFrom}
+              onChange={handleDateFromChange}
+            />
+          </label>
+          <label>
+            Date (To):
+            <input type="date" value={dateTo} onChange={handleDateToChange} />
+          </label>
+          <div className="form-button">
+            <input type="submit" value="Submit" />
+            <button onClick={closeForm}>Close</button>
+          </div>
+        </form>
+      )}
+    </div>
+  );
+};
 
 export default EdExp;
