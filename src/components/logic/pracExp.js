@@ -1,207 +1,179 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import PracExpRow from "../display/PracExpRow";
 import uniqid from "uniqid";
 
 import "../../styles/style.css";
 
-class PracExp extends Component {
-  constructor() {
-    super();
+const PracExp = () => {
+  const [showForm, setShowForm] = useState(false);
+  const [companyName, setCompanyName] = useState("");
+  const [positionTitle, setPositionTitle] = useState("");
+  const [mainTasks, setMainTasks] = useState("");
+  const [dateFrom, setDateFrom] = useState("");
+  const [dateTo, setDateTo] = useState("");
+  const [id, setId] = useState("");
+  const [PracExpArr, setPracExpArr] = useState([]);
 
-    this.state = {
-      showForm: false,
-      companyName: "",
-      positionTitle: "",
-      mainTasks: "",
-      dateFrom: "",
-      dateTo: "",
-      id: "",
-      PracExpArr: [],
-    };
+  const showAddForm = () => {
+    setShowForm(true);
+  };
 
-    this.showAddForm = this.showAddForm.bind(this);
-    this.closeForm = this.closeForm.bind(this);
-    this.handleCompanyNameChange = this.handleCompanyNameChange.bind(this);
-    this.handlePositionTitleChange = this.handlePositionTitleChange.bind(this);
-    this.handleMainTasksChange = this.handleMainTasksChange.bind(this);
-    this.handleDateFromChange = this.handleDateFromChange.bind(this);
-    this.handleDateToChange = this.handleDateToChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleEdit = this.handleEdit.bind(this);
-  }
+  const closeForm = () => {
+    setShowForm(false);
+  };
 
-  showAddForm() {
-    this.setState({ showForm: true });
-  }
+  const handleCompanyNameChange = (e) => {
+    setCompanyName(e.target.value);
+  };
 
-  closeForm() {
-    this.setState({ showForm: false });
-  }
+  const handlePositionTitleChange = (e) => {
+    setPositionTitle(e.target.value);
+  };
 
-  handleCompanyNameChange(e) {
-    this.setState({ companyName: e.target.value });
-  }
+  const handleMainTasksChange = (e) => {
+    setMainTasks(e.target.value);
+  };
 
-  handlePositionTitleChange(e) {
-    this.setState({ positionTitle: e.target.value });
-  }
+  const handleDateFromChange = (e) => {
+    setDateFrom(e.target.value);
+  };
 
-  handleMainTasksChange(e) {
-    this.setState({ mainTasks: e.target.value });
-  }
+  const handleDateToChange = (e) => {
+    setDateTo(e.target.value);
+  };
 
-  handleDateFromChange(e) {
-    this.setState({ dateFrom: e.target.value });
-  }
-
-  handleDateToChange(e) {
-    this.setState({ dateTo: e.target.value });
-  }
-
-  handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.id === "") {
+    if (id === "") {
       const newPracExp = new Map([
-        ["companyName", this.state.companyName],
-        ["positionTitle", this.state.positionTitle],
-        ["mainTasks", this.state.mainTasks],
-        ["dateFrom", this.state.dateFrom],
-        ["dateTo", this.state.dateTo],
+        ["companyName", companyName],
+        ["positionTitle", positionTitle],
+        ["mainTasks", mainTasks],
+        ["dateFrom", dateFrom],
+        ["dateTo", dateTo],
         ["id", uniqid()],
       ]);
 
-      this.setState({
-        PracExpArr: [newPracExp, ...this.state.PracExpArr],
-        showForm: false,
-        companyName: "",
-        positionTitle: "",
-        mainTasks: "",
-        dateFrom: "",
-        dateTo: "",
-      });
+      setPracExpArr([newPracExp, ...PracExpArr]);
+      setShowForm(false);
+      setCompanyName("");
+      setPositionTitle("");
+      setMainTasks("");
+      setDateFrom("");
+      setDateTo("");
     } else {
-      const copyPracExpArr = [...this.state.PracExpArr];
+      const copyPracExpArr = [...PracExpArr];
       for (let i = 0; i < copyPracExpArr.length; i++) {
-        if (this.state.id === copyPracExpArr[i].get("id")) {
-          copyPracExpArr[i].set("companyName", this.state.companyName);
-          copyPracExpArr[i].set("positionTitle", this.state.positionTitle);
-          copyPracExpArr[i].set("mainTasks", this.state.mainTasks);
-          copyPracExpArr[i].set("dateFrom", this.state.dateFrom);
-          copyPracExpArr[i].set("dateTo", this.state.dateTo);
+        if (id === copyPracExpArr[i].get("id")) {
+          copyPracExpArr[i].set("companyName", companyName);
+          copyPracExpArr[i].set("positionTitle", positionTitle);
+          copyPracExpArr[i].set("mainTasks", mainTasks);
+          copyPracExpArr[i].set("dateFrom", dateFrom);
+          copyPracExpArr[i].set("dateTo", dateTo);
         }
       }
-      this.setState({
-        PracExpArr: copyPracExpArr,
-        id: "",
-        showForm: false,
-      });
+      setPracExpArr(copyPracExpArr);
+      setId("");
+      setShowForm(false);
     }
-  }
+  };
 
-  handleEdit(e) {
+  const handleEdit = (e) => {
     const targetId = e.target.id;
     let desiredPracExp = undefined;
 
-    for (let pracExp of this.state.PracExpArr) {
+    for (let pracExp of PracExpArr) {
       if (pracExp.get("id") === targetId) {
         desiredPracExp = pracExp;
         break;
       }
     }
 
-    this.setState({
-      companyName: desiredPracExp.get("companyName"),
-      positionTitle: desiredPracExp.get("positionTitle"),
-      mainTasks: desiredPracExp.get("mainTasks"),
-      dateFrom: desiredPracExp.get("dateFrom"),
-      dateTo: desiredPracExp.get("dateTo"),
-      id: desiredPracExp.get("id"),
-      showForm: true,
-    });
-  }
+    setCompanyName(desiredPracExp.get("companyName"));
+    setPositionTitle(desiredPracExp.get("positionTitle"));
+    setMainTasks(desiredPracExp.get("mainTasks"));
+    setDateFrom(desiredPracExp.get("dateFrom"));
+    setDateTo(desiredPracExp.get("dateTo"));
+    setId(desiredPracExp.get("id"));
+    setShowForm(true);
+  };
 
-  render() {
-    return (
-      <div>
-        <div className="resume-body">
-          <div className="section-header">Work Experience</div>
-          <ul>
-            {this.state.PracExpArr.map((pracExp) => (
-              <li key={pracExp.get("id")}>
-                <div className="prac-exp-entry-div">
-                  <PracExpRow
-                    id={pracExp.get("id")}
-                    companyName={pracExp.get("companyName")}
-                    positionTitle={pracExp.get("positionTitle")}
-                    mainTasks={pracExp.get("mainTasks")}
-                    dateFrom={pracExp.get("dateFrom")}
-                    dateTo={pracExp.get("dateTo")}
-                  />
-                  <div className="edit-btn">
-                    <button id={pracExp.get("id")} onClick={this.handleEdit}>
-                      Edit
-                    </button>
-                  </div>
+  return (
+    <div>
+      <div className="resume-body">
+        <div className="section-header">Work Experience</div>
+        <ul>
+          {PracExpArr.map((pracExp) => (
+            <li key={pracExp.get("id")}>
+              <div className="prac-exp-entry-div">
+                {PracExpRow(
+                  pracExp.get("id"),
+                  pracExp.get("companyName"),
+                  pracExp.get("positionTitle"),
+                  pracExp.get("dateFrom"),
+                  pracExp.get("dateTo"),
+                  pracExp.get("mainTasks")
+                )}
+                <div className="edit-btn">
+                  <button id={pracExp.get("id")} onClick={handleEdit}>
+                    Edit
+                  </button>
                 </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <button className="add-btn" onClick={this.showAddForm}>
-          Add work experience
-        </button>
-        {this.state.showForm && (
-          <form className="input-form" onSubmit={this.handleSubmit}>
-            <label>
-              Company Name:
-              <input
-                type="text"
-                value={this.state.companyName}
-                onChange={this.handleCompanyNameChange}
-              />
-            </label>
-            <label>
-              Position title:
-              <input
-                type="text"
-                value={this.state.positionTitle}
-                onChange={this.handlePositionTitleChange}
-              />
-            </label>
-            <label>
-              Main tasks:
-              <textarea
-                rows="5"
-                value={this.state.mainTasks}
-                onChange={this.handleMainTasksChange}
-              ></textarea>
-            </label>
-            <label>
-              Date (From):
-              <input
-                type="date"
-                value={this.state.dateFrom}
-                onChange={this.handleDateFromChange}
-              />
-            </label>
-            <label>
-              Date (To):
-              <input
-                type="date"
-                value={this.state.dateTo}
-                onChange={this.handleDateToChange}
-              />
-            </label>
-            <div className="form-button">
-              <input type="submit" value="Submit" />
-              <button onClick={this.closeForm}>Close</button>
-            </div>
-          </form>
-        )}
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
-    );
-  }
-}
+
+      <button className="add-btn" onClick={showAddForm}>
+        Add work experience
+      </button>
+      {showForm && (
+        <form className="input-form" onSubmit={handleSubmit}>
+          <label>
+            Company Name:
+            <input
+              type="text"
+              value={companyName}
+              onChange={handleCompanyNameChange}
+            />
+          </label>
+          <label>
+            Position title:
+            <input
+              type="text"
+              value={positionTitle}
+              onChange={handlePositionTitleChange}
+            />
+          </label>
+          <label>
+            Main tasks:
+            <textarea
+              rows="5"
+              value={mainTasks}
+              onChange={handleMainTasksChange}
+            ></textarea>
+          </label>
+          <label>
+            Date (From):
+            <input
+              type="date"
+              value={dateFrom}
+              onChange={handleDateFromChange}
+            />
+          </label>
+          <label>
+            Date (To):
+            <input type="date" value={dateTo} onChange={handleDateToChange} />
+          </label>
+          <div className="form-button">
+            <input type="submit" value="Submit" />
+            <button onClick={closeForm}>Close</button>
+          </div>
+        </form>
+      )}
+    </div>
+  );
+};
 
 export default PracExp;
